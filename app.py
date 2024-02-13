@@ -1,13 +1,12 @@
 from flask import Flask, request, jsonify
 import pandas as pd
 import tensorflow as tf
-import pickle
 
 app = Flask(__name__)
 
-# Load the trained model
-with open('BTA_model.pkl', 'rb') as file:
-    model = pickle.load(file)
+#loading the model
+model = tf.keras.models.load_model("my_BTA_model")
+
 
 @app.route('/predict', methods=['POST'])
 def predict():
