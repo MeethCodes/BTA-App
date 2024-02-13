@@ -3,7 +3,7 @@ import pandas as pd
 import tensorflow as tf
 
 # Load the trained model using TensorFlow's model loading function
-model = tf.keras.models.load_model("my_model")
+model = tf.keras.models.load_model("my_BTA_model")
 
 app = Flask(__name__)
 
