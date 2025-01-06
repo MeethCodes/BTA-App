@@ -1,0 +1,95 @@
+package com.example.my_bta_app
+
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+
+class MyFirstScreen : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            Surface(
+                modifier = Modifier.fillMaxSize(),
+                color = MaterialTheme.colorScheme.background
+            ) {
+                var navigateToSecondScreen by remember { mutableStateOf(false) }
+                if (navigateToSecondScreen) {
+                    MySecondScreen()
+                } else {
+                    FirstScreen(onNext = { navigateToSecondScreen = true })
+                }
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun FirstScreen(onNext: () -> Unit) {
+    var highBP by remember { mutableStateOf("") }
+    var highChol by remember { mutableStateOf("") }
+    var bmi by remember { mutableStateOf("") }
+    var stroke by remember { mutableStateOf("") }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        TextField(
+            value = highBP,
+            onValueChange = { highBP = it },
+            label = { Text("High BP") }
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+        TextField(
+            value = highChol,
+            onValueChange = { highChol = it },
+            label = { Text("High Cholesterol") }
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+        TextField(
+            value = bmi,
+            onValueChange = { bmi = it },
+            label = { Text("BMI") }
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+        TextField(
+            value = stroke,
+            onValueChange = { stroke = it },
+            label = { Text("Stroke") }
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+        Button(
+            onClick = onNext,
+            enabled = highBP.isNotBlank() && highChol.isNotBlank() && bmi.isNotBlank() && stroke.isNotBlank()
+        ) {
+            Text("Next")
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun FirstScreenPreview() {
+    FirstScreen(onNext = {})
+}
